@@ -1,29 +1,41 @@
 const paragraphAnswer = document.getElementById('idParagraphAnswer')
 const textArea = document.getElementById('idTextArea')
 const buttonSubmit = document.getElementById('idButtonSubmit')
-
 const alphabet = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z"
 const alphabetArray = alphabet.split(",")
 const cipher = document.getElementById('idCipher')
 const checkboxEncode = document.getElementById('idEncode')
+const checkboxDecode = document.getElementById('idDecode')
 
 var textAreaArray
 var textAreaArrayPosition = []
-var textAreaArrayPositionEncoded = []
+var textAreaArrayPositionEncodedDecoded = []
 var textEncodedArray = []
 var textEncoded
 
-
 function preventDefault(event) {
     event.preventDefault()
+
     // encode() if encode is checked and its a number between 1 and 9
     if (checkboxEncode.checked && (cipher.value > 0 && cipher.value < 10)) {
         encode()
     }
+
     // encode() if encode is checked and transform letter into number
     if (checkboxEncode.checked && alphabetArray.includes((cipher.value).toUpperCase())) {
         transformLetterToNumberCipher()
         encode()
+    }
+
+    // decode() if decode is checked and its a number between 1 and 9
+    if (checkboxDecode.checked && (cipher.value > 0 && cipher.value < 10)) {
+        decode()
+    }
+
+    // decode() if decode is checked and its a number between 1 and 9
+    if (checkboxDecode.checked && alphabetArray.includes((cipher.value).toUpperCase())) {
+        transformLetterToNumberCipher()
+        decode()
     }
 }
 
@@ -35,17 +47,33 @@ function transformLetterToNumberCipher() {
     }
 }
 
-// <------------------------- ENCODE START -------------------------------> //
-
 function encode() {
     let textAreaUpperCase = (textArea.value).toUpperCase()
     textAreaArray = textAreaUpperCase.split("")
 
     textAreaArray.forEach(verifyPositionOfEachLetter)
 
-    textAreaArrayPosition.forEach(sumCipherTotextAreaArrayPosition)
+    textAreaArrayPosition.forEach(addCipherTotextAreaArrayPosition)
 
-    textAreaArrayPositionEncoded.forEach(encodingArrayPositionEncoded)
+    textAreaArrayPositionEncodedDecoded.forEach(encodingArrayPositionEncoded)
+
+    textEncoded = textEncodedArray.join("")
+
+    paragraphAnswer.innerText = textEncoded
+
+    cleaningFields()
+
+}
+
+function decode() {
+    let textAreaUpperCase = (textArea.value).toUpperCase()
+    textAreaArray = textAreaUpperCase.split("")
+
+    textAreaArray.forEach(verifyPositionOfEachLetter)
+
+    textAreaArrayPosition.forEach(removeCipherTotextAreaArrayPosition)
+
+    textAreaArrayPositionEncodedDecoded.forEach(encodingArrayPositionEncoded)
 
     textEncoded = textEncodedArray.join("")
 
@@ -69,16 +97,16 @@ function verifyPositionOfEachLetter(item) {
     }
 }
 
-// adding cipher value to textAreaArrayPositionEncoded
-function sumCipherTotextAreaArrayPosition(item) {
+// adding cipher value to textAreaArrayPositionEncodedDecoded
+function addCipherTotextAreaArrayPosition(item) {
     if (typeof item == "number" && item + Number(cipher.value) < 26) {
-        textAreaArrayPositionEncoded.push(item + Number(cipher.value))
+        textAreaArrayPositionEncodedDecoded.push(item + Number(cipher.value))
     } else {
         if (typeof item == "number" && item + Number(cipher.value) >= 26) {
-            textAreaArrayPositionEncoded.push((item - 26) + Number(cipher.value))
+            textAreaArrayPositionEncodedDecoded.push((item - 26) + Number(cipher.value))
         }
         else {
-            textAreaArrayPositionEncoded.push(item)
+            textAreaArrayPositionEncodedDecoded.push(item)
         }
     }
 }
@@ -97,14 +125,26 @@ function encodingArrayPositionEncoded(item) {
     }
 }
 
-// <------------------------- ENCODE END -------------------------------> //
+// adding cipher value to textAreaArrayPositionEncodedDecoded
+function removeCipherTotextAreaArrayPosition(item) {
+    if (typeof item == "number" && item - Number(cipher.value) >= 0) {
+        textAreaArrayPositionEncodedDecoded.push(item - Number(cipher.value))
+    } else {
+        if (typeof item == "number" && item - Number(cipher.value) < 0) {
+            textAreaArrayPositionEncodedDecoded.push((item + 26) - Number(cipher.value))
+        }
+        else {
+            textAreaArrayPositionEncodedDecoded.push(item)
+        }
+    }
+}
 
 // cleaning fields
 function cleaningFields() {
     textArea.value = ''
     textAreaArray = []
     textAreaArrayPosition = []
-    textAreaArrayPositionEncoded = []
+    textAreaArrayPositionEncodedDecoded = []
     textEncodedArray = []
     textEncoded = ''
     cipher.value = ''
