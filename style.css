@@ -1,0 +1,26 @@
+body{
+    font-family: 'PT Serif', serif;
+    font-size: 25px;
+    height: 100vh;
+    text-shadow: 8px 8px 10px #0000008c;
+    background-color: #000000;
+    background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #000000 10px ), repeating-linear-gradient( #13153255, #131532 );
+    color: #FADE2B
+}
+
+main{
+    padding: 50px 0;
+}
+
+.title-form{
+    font-size: 40px; 
+    font-weight: 700;
+}
+
+.submit-button{
+    font-size: 25px; 
+    font-weight: 700;
+    width: 200px;
+    margin: 20px auto;
+}
+
