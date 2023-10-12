@@ -24,3 +24,18 @@ main{
     margin: 20px auto;
 }
 
+#idCipher{
+width: 100px;
+}
+
+.divCipher{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#idCipherHelp{
+    margin-top: 10px;
+    font-size: 15px;
+    text-align: center;
+}
